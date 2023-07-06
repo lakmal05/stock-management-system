@@ -49,7 +49,6 @@ export class AuthService {
     }
 
     //    if user exist
-
     const hashedPassword = user.password;
     const isValidPassword = await bcrypt.compare(password, hashedPassword);
     if (!isValidPassword) {
@@ -76,7 +75,6 @@ export class AuthService {
 
   async generateProductKey(email: string) {
     //Genrate Prduct Key
-
     return true;
   }
 }
