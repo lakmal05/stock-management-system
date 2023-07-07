@@ -19,3 +19,9 @@ export class SignInDto {
   @MinLength(5)
   password: string;
 }
+
+export class ForgetPassowrdDto {
+  @IsNotEmpty()
+  @IsString()
+  email: string;
+}

@@ -77,4 +77,42 @@ export class AuthService {
     //Genrate Prduct Key
     return true;
   }
+
+  async genrateOTP() {
+    // const key = `${email}-${process.env.OTP}`;
+    const key = `${process.env.OTP}`;
+    const OTP = key + Math.floor(Math.random() * 10 + 1);
+
+    // console.log(OTP);
+
+    return OTP;
+  }
+
+  async forgetPassword(email: string) {
+    const userEmail = this.prismaService.user.findUnique({
+      where: {
+        email
+      },
+    });
+
+    if (!userEmail) {
+      return 'Enter Valid Email';
+    }
+
+     const Aid =(await userEmail).id
+    //otp send to databs
+    let otp = await this.genrateOTP();
+
+    // const OTP = await this.prismaService.otp.upsert({
+    //   where:{
+        
+    //   //  otp_number:otp,
+    //   //  userId:(await userEmail).id
+
+
+    //   }
+    // });
+
+    console.log(otp);
+  }
 }

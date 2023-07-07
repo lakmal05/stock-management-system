@@ -18,6 +18,15 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   user_type  UserType
+  Otp        Otp?
+}
+
+model Otp {
+  id         Int      @id @default(autoincrement())
+  otp_number String
+  created_at DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int      @unique
 }
 
 enum UserType {
