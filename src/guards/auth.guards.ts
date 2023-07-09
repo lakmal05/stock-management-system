@@ -44,13 +44,13 @@ export class AuthGuard implements CanActivate {
           return false;
         }
 
-        // console.log({user});
+        console.log({user});
 
         if (roles.includes(user.user_type)) {
           return true;
         }
       } catch (error) {
-        return error;
+        return false;
       }
     }
   }

@@ -24,4 +24,6 @@ export class ForgetPassowrdDto {
   @IsNotEmpty()
   @IsString()
   email: string;
+  
+
 }

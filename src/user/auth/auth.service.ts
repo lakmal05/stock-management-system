@@ -3,6 +3,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { UserType } from '@prisma/client';
+import { IsDate } from 'class-validator';
+import { create } from 'domain';
 
 interface signupParams {
   name: string;
@@ -32,6 +34,7 @@ export class AuthService {
         email,
         password: hashedPassword,
         user_type: UserType.CLIENT,
+        otp_number:''
       },
     });
     return user;
@@ -89,26 +92,37 @@ export class AuthService {
   }
 
   async forgetPassword(email: string) {
-    const userEmail = this.prismaService.user.findUnique({
+    let otp: string = await this.genrateOTP();
+
+    const userEmail = this.prismaService.user.upsert({
       where: {
-        email
+        email: email
+      },
+      update: {
+        otp_number: 'otp'
+      },
+      create: {
+        name:"nick",
+        email:"",
+        password:"",
+        user_type:null,
+        products:null,
+        otp_number: otp
       },
     });
+    // })
 
-    if (!userEmail) {
-      return 'Enter Valid Email';
-    }
+    // if (!userEmail) {
+    //   return 'Enter Valid Email';
+    // }
 
-     const Aid =(await userEmail).id
     //otp send to databs
-    let otp = await this.genrateOTP();
 
-    // const OTP = await this.prismaService.otp.upsert({
+    // const OTP = await this.prismaService.user.upsert({
     //   where:{
-        
-    //   //  otp_number:otp,
-    //   //  userId:(await userEmail).id
 
+    //    otp_number:otp,
+    //    userId:(await userEmail).id
 
     //   }
     // });

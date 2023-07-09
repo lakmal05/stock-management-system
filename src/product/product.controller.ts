@@ -1,6 +1,15 @@
-import { Body, Controller, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
-import { CreateProductDto } from './dtos/product.dto';
+import { CreateProductDto, ProductRespnseDto } from './dtos/product.dto';
 import { AuthGuard } from 'src/guards/auth.guards';
 import { Rols } from 'src/decorators/rols.decorators';
 import { UserType } from '@prisma/client';
@@ -9,7 +18,15 @@ import { UserType } from '@prisma/client';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Rols(UserType.SUPER_ADMIN, UserType.ADMIN, UserType.CLIENT)
+  @Get()
+  getAllProduct(
+    @Query('name') name?: string,
+    @Query('price') price?: string,
+  ): Promise<ProductRespnseDto[]> {
+    return null;
+  }
+
+  @Rols(UserType.SUPER_ADMIN, UserType.ADMIN)
   @UseGuards(AuthGuard)
   @Post('create')
   createProduct(@Body() body: CreateProductDto) {
@@ -21,5 +38,13 @@ export class ProductController {
   @Put('/:id')
   updateProduct() {
     return 'update product';
+  }
+
+  @Rols(UserType.SUPER_ADMIN, UserType.ADMIN)
+  @UseGuards(AuthGuard)
+  @Delete('/:id')
+  deleteProduct() {
+
+    
   }
 }

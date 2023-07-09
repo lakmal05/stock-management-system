@@ -20,11 +20,9 @@ export class AuthController {
 
   /*foget Passowrd*/
 
-  @Put('/forgetpassword')
+  @Post('/forgetpassword')
   fogetPassword(@Body() body: ForgetPassowrdDto) {
     const UserEmail = body.email;
-    
-
     return this.authService.forgetPassword(UserEmail);
   }
 }

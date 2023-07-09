@@ -27,6 +27,7 @@
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.14.0",
+    "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.1",
     "prisma": "^4.16.2",
     "reflect-metadata": "^0.1.13",
